@@ -14,10 +14,10 @@ public class SpringAmqpTest {
     private RabbitTemplate rabbitTemplate;
 
     @Test
-    public void testSendMessage2SimpleQueue(){
+    public void testSendMessage2SimpleQueue() {
         String queueName = "simple.queue";
         String message = "hello,spring amqp!";
-        rabbitTemplate.convertAndSend(queueName,message);
+        rabbitTemplate.convertAndSend(queueName, message);
     }
 
     @Test
@@ -26,9 +26,16 @@ public class SpringAmqpTest {
         String message = "hello,message__";
 
         for (int i = 0; i < 50; i++) {
-            rabbitTemplate.convertAndSend(queueName,message+i);
+            rabbitTemplate.convertAndSend(queueName, message + i);
             Thread.sleep(20);
         }
     }
 
+    @Test
+    public void testSendFanoutExchange() {
+        String exchangeName = "itcast.fanout";
+        String message = "hello,everyone!";
+
+        rabbitTemplate.convertAndSend(exchangeName, "", message);
+    }
 }
