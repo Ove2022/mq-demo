@@ -1,8 +1,11 @@
 package cn.itcast.mq;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -13,24 +16,13 @@ public class ConsumerApplication {
         SpringApplication.run(ConsumerApplication.class, args);
     }
 
+    @Bean
+    public MessageConverter messageConverter(){
+        return new Jackson2JsonMessageConverter();
+    }
+
     @Component
     public static class SpringRabbitListener {
 
-    /*    @RabbitListener(queues = "simple.queue")
-        public void listenSimpleQueueMessage(String msg) {
-            System.out.println("spring消费者接收到消息：【" + msg + "】");
-        }*/
-
-        @RabbitListener(queues = "simple.queue")
-        public void listenWorkQueueMessage1(String msg) throws InterruptedException {
-            System.out.println("消费者1接收到消息：【" + msg + "】"+ LocalTime.now());
-            Thread.sleep(20);
-        }
-
-        @RabbitListener(queues = "simple.queue")
-        public void listenWorkQueueMessage2(String msg) throws InterruptedException {
-            System.err.println("消费者2........：【" + msg + "】"+ LocalTime.now());
-            Thread.sleep(200);
-        }
     }
 }
