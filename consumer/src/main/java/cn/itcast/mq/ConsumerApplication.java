@@ -20,9 +20,4 @@ public class ConsumerApplication {
     public MessageConverter messageConverter(){
         return new Jackson2JsonMessageConverter();
     }
-
-    @Component
-    public static class SpringRabbitListener {
-
-    }
 }
